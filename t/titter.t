@@ -14,25 +14,25 @@ sub init : Test(1) {
 
 sub values : Tests {
     my $b1 = Bird->new( name => "kimikimi714" );
-    is_deeply [$b1->get_name], ["kimikimi714"];
+    is_deeply [$b1->get_value("name")], ["kimikimi714"];
 
-    my $b2 = Bird->new(name => "reikon");
-    is_deeply [$b2->get_name], ["reikon"];
-    is_deeply [$b1->get_name], ["kimikimi714"];
-=pod
-    $list->append("Hello");
-	$list->get_values;
-    is_deeply [$list->get_values], ["Hello"];
-
-    $list->append("World");
-	$list->get_values;
-    is_deeply [$list->get_values], ["Hello","World"];
-
-    $list->append(2011);
-	$list->get_values;
-	is_deeply [$list->get_values], ["Hello","World",2011];
+	my $b2 = Bird->new( name => "jkondo" );
+	my $b3 = Bird->new( name => "reikon" );
+	my $b4 = Bird->new( name => "onishi");
+    is_deeply [$b2->get_value("name")], ["jkondo"];
+    is_deeply [$b1->get_value("name")], ["kimikimi714"];
+    
+	$b1->tweet("‚ß‚Á‚¿‚á‚Ş‚¸‚©‚µ‚¢‚â‚ñI");
+	$b3->tweet("‚µ‚È‚à‚ñ‚Æ‚¨U•à’†‚Å‚·");
+	$b4->tweet("‰GŠÛŒä’r‚È‚¤I");
+	$b2->tweet("‚«‚å‚¤‚Í‚ ‚Â‚¢‚Å‚·‚ËI");
 	
-=cut
+	$b1->follow($b2);
+	$b1->follow($b3);
+	$b1->follow($b4);
+    is_deeply [$b1->{friends}->[0]], [$b4->{name}];
+
+	$b1->friends_timeline;
 }
 
 __PACKAGE__->runtests;
